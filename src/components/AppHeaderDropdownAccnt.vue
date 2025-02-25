@@ -1,5 +1,5 @@
 <script setup>
-import avatar from '@/assets/images/avatars/8.jpg'
+import avatar from '@/assets/images/avatars/chibi-rimuru-tempest-meyvn2xqfzwcinyt.jpg'
 
 const itemsCount = 42
 </script>

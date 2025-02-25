@@ -1,4 +1,7 @@
+
+<!-- this will need to pull from data in db for percentage stats -->
 <script setup>
+
 import { CChartDoughnut } from '@coreui/vue-chartjs'
 
 const data = {
