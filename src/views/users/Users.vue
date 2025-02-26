@@ -117,10 +117,12 @@ const resetForm = () => {
 const saveUser = () => {
   if (isEditing.value) {
     // Update user
+
     const index = users.value.findIndex((u) => u.id === form.value.id);
     users.value.splice(index, 1, { ...form.value });
   } else {
     // Add new user
+
     form.value.id = users.value.length + 1;
     users.value.push({ ...form.value });
   }
@@ -133,5 +135,4 @@ const deleteUser = (id) => {
 </script>
 
 <style scoped>
-/* Add custom styles if needed */
 </style>

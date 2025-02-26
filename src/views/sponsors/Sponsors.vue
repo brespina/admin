@@ -3,6 +3,6 @@
 
 <template>
   <div>
-    hi
+    hi from sponsors 
   </div>
 </template>

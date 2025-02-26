@@ -1,7 +1,8 @@
 <script setup>
 </script>
+
 <template>
   <div>
-    hi
+    hi from events 
   </div>
 </template>
