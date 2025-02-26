@@ -2,7 +2,11 @@
 </script>
 
 <template>
-  <div>
-    hi
-  </div>
+  <CContainer>
+    <CRow>
+      <div>
+        hi
+      </div>
+    </CRow>
+  </CContainer>
 </template>

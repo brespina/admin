@@ -39,74 +39,43 @@ const routes = [
       {
         path: '/users',
         name: 'Users',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+
+        component: () => import('@/views/users/Users.vue'),
       },
       {
         path: '/events',
         name: 'Events',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/events/Events.vue'),
       },
       {
         path: '/matches',
         name: 'Matches',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/matches/Matches.vue'),
       },
       {
         path: '/teams',
         name: 'Teams',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/teams/Teams.vue'),
       },
       {
         path: '/media',
         name: 'Media',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/media/Media.vue'),
       },
       {
         path: '/officers',
         name: 'Officers',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/officers/Officers.vue'),
       },
       {
         path: '/sponsors',
         name: 'Sponsors',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/sponsors/Sponsors.vue'),
       },
       {
         path: '/coordinators',
         name: 'Coordinators',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
+        component: () => import('@/views/coordinators/Coordinators.vue'),
       },
 
       //BELOW NEED TO DELETE. AFTER. THIS IS FOR FRONT END INSPO
@@ -115,33 +84,6 @@ const routes = [
         path: '/charts',
         name: 'Charts',
         component: () => import('@/views/charts/Charts.vue'),
-      },
-      {
-        path: '/icons',
-        name: 'Icons',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
-        redirect: '/icons/coreui-icons',
-        children: [
-          {
-            path: '/icons/coreui-icons',
-            name: 'CoreUI Icons',
-            component: () => import('@/views/icons/CoreUIIcons.vue'),
-          },
-          {
-            path: '/icons/brands',
-            name: 'Brands',
-            component: () => import('@/views/icons/Brands.vue'),
-          },
-          {
-            path: '/icons/flags',
-            name: 'Flags',
-            component: () => import('@/views/icons/Flags.vue'),
-          },
-        ],
       },
       {
         path: '/notifications',
