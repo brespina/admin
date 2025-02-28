@@ -1,7 +1,7 @@
 <script setup>
-import avatar from '@/assets/images/avatars/chibi-rimuru-tempest-meyvn2xqfzwcinyt.jpg'
+import avatar from "@/assets/images/avatars/chibi-rimuru-tempest-meyvn2xqfzwcinyt.jpg";
 
-const itemsCount = 42
+const itemsCount = 42;
 </script>
 
 <template>
@@ -49,7 +49,9 @@ const itemsCount = 42
         <CBadge color="primary" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
       <CDropdownDivider />
-      <CDropdownItem> <CIcon icon="cil-shield-alt" /> Lock Account </CDropdownItem>
+      <CDropdownItem>
+        <CIcon icon="cil-shield-alt" /> Lock Account
+      </CDropdownItem>
       <CDropdownItem> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>

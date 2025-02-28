@@ -1,33 +1,33 @@
 <script setup>
-import { onBeforeMount } from 'vue'
-import { useColorModes } from '@coreui/vue'
+import { onBeforeMount } from "vue";
+import { useColorModes } from "@coreui/vue";
 
-import { useThemeStore } from '@/stores/theme.js'
+import { useThemeStore } from "@/stores/theme.js";
 
 const { isColorModeSet, setColorMode } = useColorModes(
-  'coreui-free-vue-admin-template-theme',
-)
-const currentTheme = useThemeStore()
+  "coreui-free-vue-admin-template-theme",
+);
+const currentTheme = useThemeStore();
 
 onBeforeMount(() => {
-  const urlParams = new URLSearchParams(window.location.href.split('?')[1])
-  let theme = urlParams.get('theme')
+  const urlParams = new URLSearchParams(window.location.href.split("?")[1]);
+  let theme = urlParams.get("theme");
 
   if (theme !== null && theme.match(/^[A-Za-z0-9\s]+/)) {
-    theme = theme.match(/^[A-Za-z0-9\s]+/)[0]
+    theme = theme.match(/^[A-Za-z0-9\s]+/)[0];
   }
 
   if (theme) {
-    setColorMode(theme)
-    return
+    setColorMode(theme);
+    return;
   }
 
   if (isColorModeSet()) {
-    return
+    return;
   }
 
-  setColorMode(currentTheme.theme)
-})
+  setColorMode(currentTheme.theme);
+});
 </script>
 
 <template>
@@ -36,7 +36,7 @@ onBeforeMount(() => {
 
 <style lang="scss">
 // Import Main styles for this application
-@use 'styles/style';
+@use "styles/style";
 // We use those styles to show code examples, you should remove them in your application.
-@use 'styles/examples';
+@use "styles/examples";
 </style>

@@ -1,8 +1,5 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    hi from officers
-  </div>
+  <div>hi from officers</div>
 </template>

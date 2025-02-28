@@ -1,8 +1,5 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    hi from coordinators 
-  </div>
+  <div>hi from coordinators</div>
 </template>

@@ -1,22 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const visibleLiveDemo = ref(false)
-const visibleStaticBackdropDemo = ref(false)
-const visibleScrollingLongContentDemo = ref(false)
-const visibleScrollableDemo = ref(false)
-const visibleVerticallyCenteredDemo = ref(false)
-const visibleVerticallyCenteredScrollableDemo = ref(false)
-const tooltipsAndPopoversDemo= ref(false)
-const xlDemo = ref(false)
-const lgDemo = ref(false)
-const smDemo = ref(false)
-const fullscreenDemo = ref(false)
-const fullscreenSmDemo = ref(false)
-const fullscreenMdDemo = ref(false)
-const fullscreenLgDemo = ref(false)
-const fullscreenXlDemo = ref(false)
-const fullscreenXxlDemo = ref(false)
+const visibleLiveDemo = ref(false);
+const visibleStaticBackdropDemo = ref(false);
+const visibleScrollingLongContentDemo = ref(false);
+const visibleScrollableDemo = ref(false);
+const visibleVerticallyCenteredDemo = ref(false);
+const visibleVerticallyCenteredScrollableDemo = ref(false);
+const tooltipsAndPopoversDemo = ref(false);
+const xlDemo = ref(false);
+const lgDemo = ref(false);
+const smDemo = ref(false);
+const fullscreenDemo = ref(false);
+const fullscreenSmDemo = ref(false);
+const fullscreenMdDemo = ref(false);
+const fullscreenLgDemo = ref(false);
+const fullscreenXlDemo = ref(false);
+const fullscreenXxlDemo = ref(false);
 </script>
 
 <template>
@@ -30,10 +30,11 @@ const fullscreenXxlDemo = ref(false)
         <CCardBody>
           <p class="text-body-secondary small">
             Below is a static modal example (meaning its
-            <code>position</code> and <code>display</code> have been overridden). Included are the
-            modal header, modal body (required for <code>padding</code>), and modal footer
-            (optional). We ask that you include modal headers with dismiss actions whenever
-            possible, or provide another explicit dismiss action.
+            <code>position</code> and <code>display</code> have been
+            overridden). Included are the modal header, modal body (required for
+            <code>padding</code>), and modal footer (optional). We ask that you
+            include modal headers with dismiss actions whenever possible, or
+            provide another explicit dismiss action.
           </p>
           <DocsExample href="components/modal.html#modal-components">
             <CModal
@@ -57,18 +58,20 @@ const fullscreenXxlDemo = ref(false)
     </CCol>
     <CCol :xs="12">
       <CCard class="mb-4">
-        <CCardHeader> <strong>Vue Modal</strong> <small>Live demo</small> </CCardHeader>
+        <CCardHeader>
+          <strong>Vue Modal</strong> <small>Live demo</small>
+        </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            Toggle a working modal demo by clicking the button below. It will slide down and fade in
-            from the top of the page.
+            Toggle a working modal demo by clicking the button below. It will
+            slide down and fade in from the top of the page.
           </p>
           <DocsExample href="components/modal.html#live-demo">
             <CButton
               color="primary"
               @click="
                 () => {
-                  visibleLiveDemo = true
+                  visibleLiveDemo = true;
                 }
               "
               >Launch demo modal</CButton
@@ -77,7 +80,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="visibleLiveDemo"
               @close="
                 () => {
-                  visibleLiveDemo = false
+                  visibleLiveDemo = false;
                 }
               "
             >
@@ -85,19 +88,21 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    visibleLiveDemo = false
+                    visibleLiveDemo = false;
                   }
                 "
               >
                 <CModalTitle>Modal title</CModalTitle>
               </CModalHeader>
-              <CModalBody>Woohoo, you're reading this text in a modal!</CModalBody>
+              <CModalBody
+                >Woohoo, you're reading this text in a modal!</CModalBody
+              >
               <CModalFooter>
                 <CButton
                   color="secondary"
                   @click="
                     () => {
-                      visibleLiveDemo = false
+                      visibleLiveDemo = false;
                     }
                   "
                 >
@@ -112,19 +117,22 @@ const fullscreenXxlDemo = ref(false)
     </CCol>
     <CCol :xs="12">
       <CCard class="mb-4">
-        <CCardHeader> <strong>Vue Modal</strong> <small>Static backdrop</small> </CCardHeader>
+        <CCardHeader>
+          <strong>Vue Modal</strong> <small>Static backdrop</small>
+        </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            If you set <code>backdrop</code> property to <code>static</code>, your modal will behave
-            as though the backdrop is static, meaning it will not close when clicking outside it.
-            Click the button below to try it.
+            If you set <code>backdrop</code> property to <code>static</code>,
+            your modal will behave as though the backdrop is static, meaning it
+            will not close when clicking outside it. Click the button below to
+            try it.
           </p>
           <DocsExample href="components/modal.html#static-backdrop">
             <CButton
               color="primary"
               @click="
                 () => {
-                  visibleStaticBackdropDemo = true
+                  visibleStaticBackdropDemo = true;
                 }
               "
               >Launch demo modal</CButton
@@ -134,7 +142,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="visibleStaticBackdropDemo"
               @close="
                 () => {
-                  visibleStaticBackdropDemo = false
+                  visibleStaticBackdropDemo = false;
                 }
               "
             >
@@ -142,19 +150,21 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    visibleStaticBackdropDemo = false
+                    visibleStaticBackdropDemo = false;
                   }
                 "
               >
                 <CModalTitle>Modal title</CModalTitle>
               </CModalHeader>
-              <CModalBody>Woohoo, you're reading this text in a modal!</CModalBody>
+              <CModalBody
+                >Woohoo, you're reading this text in a modal!</CModalBody
+              >
               <CModalFooter>
                 <CButton
                   color="secondary"
                   @click="
                     () => {
-                      visibleStaticBackdropDemo = false
+                      visibleStaticBackdropDemo = false;
                     }
                   "
                 >
@@ -174,15 +184,16 @@ const fullscreenXxlDemo = ref(false)
         </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            When modals become too long for the user's viewport or device, they scroll independent
-            of the page itself. Try the demo below to see what we mean.
+            When modals become too long for the user's viewport or device, they
+            scroll independent of the page itself. Try the demo below to see
+            what we mean.
           </p>
           <DocsExample href="components/modal.html#scrolling-long-content">
             <CButton
               color="primary"
               @click="
                 () => {
-                  visibleScrollingLongContentDemo = true
+                  visibleScrollingLongContentDemo = true;
                 }
               "
               >Launch demo modal</CButton
@@ -191,7 +202,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="visibleScrollingLongContentDemo"
               @close="
                 () => {
-                  visibleScrollingLongContentDemo = false
+                  visibleScrollingLongContentDemo = false;
                 }
               "
             >
@@ -199,7 +210,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    visibleScrollingLongContentDemo = false
+                    visibleScrollingLongContentDemo = false;
                   }
                 "
               >
@@ -207,94 +218,107 @@ const fullscreenXxlDemo = ref(false)
               </CModalHeader>
               <CModalBody>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
               </CModalBody>
             </CModal>
           </DocsExample>
           <p class="text-body-secondary small">
-            You can also create a scrollable modal that allows scroll the modal body by adding
+            You can also create a scrollable modal that allows scroll the modal
+            body by adding
             <code>scrollable</code> prop.
           </p>
           <DocsExample href="components/modal.html#scrolling-long-content">
@@ -302,7 +326,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  visibleScrollableDemo = true
+                  visibleScrollableDemo = true;
                 }
               "
               >Launch demo modal</CButton
@@ -312,7 +336,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="visibleScrollableDemo"
               @close="
                 () => {
-                  visibleScrollableDemo = false
+                  visibleScrollableDemo = false;
                 }
               "
             >
@@ -320,7 +344,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    visibleScrollableDemo = false
+                    visibleScrollableDemo = false;
                   }
                 "
               >
@@ -328,88 +352,100 @@ const fullscreenXxlDemo = ref(false)
               </CModalHeader>
               <CModalBody>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
                 <p>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo
+                  odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                  risus, porta ac consectetur ac, vestibulum at eros.
                 </p>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                  sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur et. Vivamus sagittis lacus vel augue laoreet
+                  rutrum faucibus dolor auctor.
                 </p>
                 <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                  scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non
-                  metus auctor fringilla.
+                  Aenean lacinia bibendum nulla sed consectetur. Praesent
+                  commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                  fringilla.
                 </p>
               </CModalBody>
             </CModal>
@@ -419,18 +455,20 @@ const fullscreenXxlDemo = ref(false)
     </CCol>
     <CCol :xs="12">
       <CCard class="mb-4">
-        <CCardHeader> <strong>Vue Modal</strong> <small>Vertically centered</small> </CCardHeader>
+        <CCardHeader>
+          <strong>Vue Modal</strong> <small>Vertically centered</small>
+        </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            Add <code>alignment=&#34;center&#34;</code> to <code>&lt;CModal&gt;</code> to vertically
-            center the modal.
+            Add <code>alignment=&#34;center&#34;</code> to
+            <code>&lt;CModal&gt;</code> to vertically center the modal.
           </p>
           <DocsExample href="components/modal.html#vertically-centered">
             <CButton
               color="primary"
               @click="
                 () => {
-                  visibleVerticallyCenteredDemo = true
+                  visibleVerticallyCenteredDemo = true;
                 }
               "
               >Vertically centered modal</CButton
@@ -440,7 +478,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="visibleVerticallyCenteredDemo"
               @close="
                 () => {
-                  visibleVerticallyCenteredDemo = false
+                  visibleVerticallyCenteredDemo = false;
                 }
               "
             >
@@ -448,23 +486,23 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    visibleVerticallyCenteredDemo = false
+                    visibleVerticallyCenteredDemo = false;
                   }
                 "
               >
                 <CModalTitle>Modal title</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                vestibulum at eros.
+                Cras mattis consectetur purus sit amet fermentum. Cras justo
+                odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                risus, porta ac consectetur ac, vestibulum at eros.
               </CModalBody>
               <CModalFooter>
                 <CButton
                   color="secondary"
                   @click="
                     () => {
-                      visibleVerticallyCenteredDemo = false
+                      visibleVerticallyCenteredDemo = false;
                     }
                   "
                 >
@@ -480,7 +518,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  visibleVerticallyCenteredScrollableDemo = true
+                  visibleVerticallyCenteredScrollableDemo = true;
                 }
               "
               >Vertically centered scrollable modal</CButton
@@ -491,7 +529,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="visibleVerticallyCenteredScrollableDemo"
               @close="
                 () => {
-                  visibleVerticallyCenteredScrollableDemo = false
+                  visibleVerticallyCenteredScrollableDemo = false;
                 }
               "
             >
@@ -499,23 +537,23 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    visibleVerticallyCenteredScrollableDemo = false
+                    visibleVerticallyCenteredScrollableDemo = false;
                   }
                 "
               >
                 <CModalTitle>Modal title</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                vestibulum at eros.
+                Cras mattis consectetur purus sit amet fermentum. Cras justo
+                odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                risus, porta ac consectetur ac, vestibulum at eros.
               </CModalBody>
               <CModalFooter>
                 <CButton
                   color="secondary"
                   @click="
                     () => {
-                      visibleVerticallyCenteredScrollableDemo = false
+                      visibleVerticallyCenteredScrollableDemo = false;
                     }
                   "
                 >
@@ -530,19 +568,22 @@ const fullscreenXxlDemo = ref(false)
     </CCol>
     <CCol :xs="12">
       <CCard class="mb-4">
-        <CCardHeader> <strong>Vue Modal</strong> <small>Tooltips and popovers</small> </CCardHeader>
+        <CCardHeader>
+          <strong>Vue Modal</strong> <small>Tooltips and popovers</small>
+        </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            <code>&lt;CTooltips&gt;</code> and <code>&lt;CPopovers&gt;</code> can be placed within
-            modals as needed. When modals are closed, any tooltips and popovers within are also
-            automatically dismissed.
+            <code>&lt;CTooltips&gt;</code> and
+            <code>&lt;CPopovers&gt;</code> can be placed within modals as
+            needed. When modals are closed, any tooltips and popovers within are
+            also automatically dismissed.
           </p>
           <DocsExample href="components/modal.html#tooltips-and-popovers">
             <CButton
               color="primary"
               @click="
                 () => {
-                  tooltipsAndPopoversDemo = true
+                  tooltipsAndPopoversDemo = true;
                 }
               "
               >Launch demo modal</CButton
@@ -551,7 +592,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="tooltipsAndPopoversDemo"
               @close="
                 () => {
-                  tooltipsAndPopoversDemo = false
+                  tooltipsAndPopoversDemo = false;
                 }
               "
             >
@@ -559,7 +600,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    tooltipsAndPopoversDemo = false
+                    tooltipsAndPopoversDemo = false;
                   }
                 "
               >
@@ -582,7 +623,8 @@ const fullscreenXxlDemo = ref(false)
                 <h5>Tooltips in a modal</h5>
                 <p>
                   <CLink v-c-tooltip="'Tooltip'">This link</CLink> and
-                  <CLink v-c-tooltip="'Tooltip'">that link</CLink> have tooltips on hover.
+                  <CLink v-c-tooltip="'Tooltip'">that link</CLink> have tooltips
+                  on hover.
                 </p>
               </CModalBody>
               <CModalFooter>
@@ -590,7 +632,7 @@ const fullscreenXxlDemo = ref(false)
                   color="secondary"
                   @click="
                     () => {
-                      tooltipsAndPopoversDemo = false
+                      tooltipsAndPopoversDemo = false;
                     }
                   "
                 >
@@ -605,12 +647,15 @@ const fullscreenXxlDemo = ref(false)
     </CCol>
     <CCol :xs="12">
       <CCard class="mb-4">
-        <CCardHeader> <strong>Vue Modal</strong> <small>Optional sizes</small> </CCardHeader>
+        <CCardHeader>
+          <strong>Vue Modal</strong> <small>Optional sizes</small>
+        </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            Modals have three optional sizes, available via modifier classes to be placed on a
-            <code>&lt;CModal&gt;</code>. These sizes kick in at certain breakpoints to avoid
-            horizontal scrollbars on narrower viewports.
+            Modals have three optional sizes, available via modifier classes to
+            be placed on a
+            <code>&lt;CModal&gt;</code>. These sizes kick in at certain
+            breakpoints to avoid horizontal scrollbars on narrower viewports.
           </p>
           <table class="table">
             <thead>
@@ -662,7 +707,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  xlDemo = true
+                  xlDemo = true;
                 }
               "
               >Extra large modal</CButton
@@ -671,7 +716,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  lgDemo = true
+                  lgDemo = true;
                 }
               "
               >Large modal</CButton
@@ -680,7 +725,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  smDemo = true
+                  smDemo = true;
                 }
               "
               >Small modal</CButton
@@ -690,7 +735,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="xlDemo"
               @close="
                 () => {
-                  xlDemo = false
+                  xlDemo = false;
                 }
               "
             >
@@ -698,7 +743,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    xlDemo = false
+                    xlDemo = false;
                   }
                 "
               >
@@ -711,7 +756,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="lgDemo"
               @close="
                 () => {
-                  lgDemo = false
+                  lgDemo = false;
                 }
               "
             >
@@ -719,7 +764,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    lgDemo = false
+                    lgDemo = false;
                   }
                 "
               >
@@ -732,7 +777,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="smDemo"
               @close="
                 () => {
-                  smDemo = false
+                  smDemo = false;
                 }
               "
             >
@@ -740,7 +785,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    smDemo = false
+                    smDemo = false;
                   }
                 "
               >
@@ -754,11 +799,13 @@ const fullscreenXxlDemo = ref(false)
     </CCol>
     <CCol :xs="12">
       <CCard class="mb-4">
-        <CCardHeader> <strong>Vue Modal</strong> <small>Fullscreen Modal</small> </CCardHeader>
+        <CCardHeader>
+          <strong>Vue Modal</strong> <small>Fullscreen Modal</small>
+        </CCardHeader>
         <CCardBody>
           <p class="text-body-secondary small">
-            Another override is the option to pop up a modal that covers the user viewport,
-            available via property <code>fullscrean</code>.
+            Another override is the option to pop up a modal that covers the
+            user viewport, available via property <code>fullscrean</code>.
           </p>
           <table class="table">
             <thead>
@@ -811,7 +858,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  fullscreenDemo = true
+                  fullscreenDemo = true;
                 }
               "
               >Full screen</CButton
@@ -820,7 +867,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  fullscreenSmDemo = true
+                  fullscreenSmDemo = true;
                 }
               "
               >Full screen below sm</CButton
@@ -829,7 +876,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  fullscreenMdDemo = true
+                  fullscreenMdDemo = true;
                 }
               "
               >Full screen below md</CButton
@@ -838,7 +885,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  fullscreenLgDemo = true
+                  fullscreenLgDemo = true;
                 }
               "
               >Full screen below lg</CButton
@@ -847,7 +894,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  fullscreenXlDemo = true
+                  fullscreenXlDemo = true;
                 }
               "
               >Full screen below xl</CButton
@@ -856,7 +903,7 @@ const fullscreenXxlDemo = ref(false)
               color="primary"
               @click="
                 () => {
-                  fullscreenXxlDemo = true
+                  fullscreenXxlDemo = true;
                 }
               "
               >Full screen below xxl</CButton
@@ -866,7 +913,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="fullscreenDemo"
               @close="
                 () => {
-                  fullscreenDemo = false
+                  fullscreenDemo = false;
                 }
               "
             >
@@ -874,7 +921,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    xlDemo = false
+                    xlDemo = false;
                   }
                 "
               >
@@ -887,7 +934,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="fullscreenSmDemo"
               @close="
                 () => {
-                  fullscreenSmDemo = false
+                  fullscreenSmDemo = false;
                 }
               "
             >
@@ -895,7 +942,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    fullscreenSmDemo = false
+                    fullscreenSmDemo = false;
                   }
                 "
               >
@@ -908,7 +955,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="fullscreenMdDemo"
               @close="
                 () => {
-                  fullscreenMdDemo = false
+                  fullscreenMdDemo = false;
                 }
               "
             >
@@ -916,7 +963,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    fullscreenMdDemo = false
+                    fullscreenMdDemo = false;
                   }
                 "
               >
@@ -929,7 +976,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="fullscreenLgDemo"
               @close="
                 () => {
-                  fullscreenLgDemo = false
+                  fullscreenLgDemo = false;
                 }
               "
             >
@@ -937,7 +984,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    fullscreenLgDemo = false
+                    fullscreenLgDemo = false;
                   }
                 "
               >
@@ -950,7 +997,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="fullscreenXlDemo"
               @close="
                 () => {
-                  fullscreenXlDemo = false
+                  fullscreenXlDemo = false;
                 }
               "
             >
@@ -958,7 +1005,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    fullscreenXlDemo = false
+                    fullscreenXlDemo = false;
                   }
                 "
               >
@@ -971,7 +1018,7 @@ const fullscreenXxlDemo = ref(false)
               :visible="fullscreenXxlDemo"
               @close="
                 () => {
-                  fullscreenXxlDemo = false
+                  fullscreenXxlDemo = false;
                 }
               "
             >
@@ -979,7 +1026,7 @@ const fullscreenXxlDemo = ref(false)
                 dismiss
                 @close="
                   () => {
-                    fullscreenXxlDemo = false
+                    fullscreenXxlDemo = false;
                   }
                 "
               >

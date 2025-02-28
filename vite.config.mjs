@@ -1,12 +1,12 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import path from 'node:path'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import path from "node:path";
+import autoprefixer from "autoprefixer";
 
 export default defineConfig(() => {
   return {
     plugins: [vue()],
-    base: './',
+    base: "./",
     css: {
       postcss: {
         plugins: [
@@ -19,18 +19,27 @@ export default defineConfig(() => {
         // webpack path resolve to vitejs
         {
           find: /^~(.*)$/,
-          replacement: '$1',
+          replacement: "$1",
         },
         {
-          find: '@/',
-          replacement: `${path.resolve(__dirname, 'src')}/`,
+          find: "@/",
+          replacement: `${path.resolve(__dirname, "src")}/`,
         },
         {
-          find: '@',
-          replacement: path.resolve(__dirname, '/src'),
+          find: "@",
+          replacement: path.resolve(__dirname, "/src"),
         },
       ],
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.scss'],
+      extensions: [
+        ".mjs",
+        ".js",
+        ".ts",
+        ".jsx",
+        ".tsx",
+        ".json",
+        ".vue",
+        ".scss",
+      ],
     },
     server: {
       port: 3000,
@@ -38,5 +47,5 @@ export default defineConfig(() => {
         // https://vitejs.dev/config/server-options.html
       },
     },
-  }
-})
+  };
+});

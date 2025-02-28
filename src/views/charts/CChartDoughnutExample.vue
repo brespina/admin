@@ -1,18 +1,16 @@
-
 <!-- this will need to pull from data in db for percentage stats -->
 <script setup>
-
-import { CChartDoughnut } from '@coreui/vue-chartjs'
+import { CChartDoughnut } from "@coreui/vue-chartjs";
 
 const data = {
-  labels: ['VueJs', 'EmberJs', 'VueJs', 'AngularJs'],
+  labels: ["VueJs", "EmberJs", "VueJs", "AngularJs"],
   datasets: [
     {
-      backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+      backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
       data: [40, 20, 80, 10],
     },
   ],
-}
+};
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import router from '@/router'
+import { onMounted, ref } from "vue";
+import router from "@/router";
 
-const breadcrumbs = ref()
+const breadcrumbs = ref();
 
 const getBreadcrumbs = () => {
   return router.currentRoute.value.matched.map((route) => {
@@ -10,17 +10,17 @@ const getBreadcrumbs = () => {
       active: route.path === router.currentRoute.value.fullPath,
       name: route.name,
       path: `${router.options.history.base}${route.path}`,
-    }
-  })
-}
+    };
+  });
+};
 
 router.afterEach(() => {
-  breadcrumbs.value = getBreadcrumbs()
-})
+  breadcrumbs.value = getBreadcrumbs();
+});
 
 onMounted(() => {
-  breadcrumbs.value = getBreadcrumbs()
-})
+  breadcrumbs.value = getBreadcrumbs();
+});
 </script>
 
 <template>

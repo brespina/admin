@@ -1,8 +1,5 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    hi from matches 
-  </div>
+  <div>hi from matches</div>
 </template>

@@ -1,8 +1,5 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    hi from teams 
-  </div>
+  <div>hi from teams</div>
 </template>

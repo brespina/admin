@@ -5,7 +5,6 @@
         <strong>Manage Users</strong>
       </CCardHeader>
       <CCardBody>
-
         <CButton color="primary" @click="openAddUserModal" class="mb-4">
           <CIcon name="cil-plus" /> Add User
         </CButton>
@@ -35,10 +34,19 @@
               <CTableDataCell>{{ user.role }}</CTableDataCell>
               <CTableDataCell>{{ user.paid_dues }}</CTableDataCell>
               <CTableDataCell>
-                <CButton color="warning" size="sm" @click="openEditUserModal(user)">
+                <CButton
+                  color="warning"
+                  size="sm"
+                  @click="openEditUserModal(user)"
+                >
                   <CIcon name="cil-pencil" /> Edit
                 </CButton>
-                <CButton color="danger" size="sm" @click="deleteUser(user.id)" class="ml-2">
+                <CButton
+                  color="danger"
+                  size="sm"
+                  @click="deleteUser(user.id)"
+                  class="ml-2"
+                >
                   <CIcon name="cil-trash" /> Delete
                 </CButton>
               </CTableDataCell>
@@ -50,12 +58,21 @@
 
     <CModal :visible="isModalOpen" @close="closeModal">
       <CModalHeader>
-        <CModalTitle>{{ isEditing ? 'Edit User' : 'Add User' }}</CModalTitle>
+        <CModalTitle>{{ isEditing ? "Edit User" : "Add User" }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm>
-          <CFormInput v-model="form.name" label="Name" placeholder="Enter name" />
-          <CFormInput v-model="form.email" label="Email" placeholder="Enter email" class="mt-3" />
+          <CFormInput
+            v-model="form.name"
+            label="Name"
+            placeholder="Enter name"
+          />
+          <CFormInput
+            v-model="form.email"
+            label="Email"
+            placeholder="Enter email"
+            class="mt-3"
+          />
           <CFormSelect v-model="form.role" label="Role" class="mt-3">
             <option value="admin">Admin</option>
             <option value="user">User</option>
@@ -65,28 +82,61 @@
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" @click="closeModal">Cancel</CButton>
-        <CButton color="primary" @click="saveUser">{{ isEditing ? 'Update' : 'Add' }}</CButton>
+        <CButton color="primary" @click="saveUser">{{
+          isEditing ? "Update" : "Add"
+        }}</CButton>
       </CModalFooter>
     </CModal>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const users = ref([
-  { id: 1, username: 'jDoe087', first_name: 'John', last_name: 'Doe', email: 'john@example.com', signup_date: '2025-02-26', role: 'member', paid_dues: true },
-  { id: 2, username: 'hertzoXOXO', first_name: 'Jane', last_name: 'Dash', email: 'jane@example.com', signup_date: '2025-02-26', role: 'user', paid_dues: false },
-  { id: 3, username: 'hetzo', first_name: 'Het', last_name: 'Zo', email: 'het@zo.com', signup_date: '2024-01-17', role: 'admin', paid_dues: true },
+  {
+    id: 1,
+    username: "jDoe087",
+    first_name: "John",
+    last_name: "Doe",
+    email: "john@example.com",
+    signup_date: "2025-02-26",
+    role: "member",
+    paid_dues: true,
+  },
+  {
+    id: 2,
+    username: "hertzoXOXO",
+    first_name: "Jane",
+    last_name: "Dash",
+    email: "jane@example.com",
+    signup_date: "2025-02-26",
+    role: "user",
+    paid_dues: false,
+  },
+  {
+    id: 3,
+    username: "hetzo",
+    first_name: "Het",
+    last_name: "Zo",
+    email: "het@zo.com",
+    signup_date: "2024-01-17",
+    role: "admin",
+    paid_dues: true,
+  },
 ]);
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const form = ref({
   id: null,
-  name: '',
-  email: '',
-  role: 'user',
+  username: "",
+  first_name: "",
+  last_name: "",
+  email: "",
+  signup_date: "",
+  role: "user",
+  paid_dues: false,
 });
 
 const openAddUserModal = () => {
@@ -108,21 +158,21 @@ const closeModal = () => {
 const resetForm = () => {
   form.value = {
     id: null,
-    name: '',
-    email: '',
-    role: 'user',
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    signup_date: "",
+    role: "user",
+    paid_dues: false,  
   };
 };
 
 const saveUser = () => {
   if (isEditing.value) {
-    // Update user
-
     const index = users.value.findIndex((u) => u.id === form.value.id);
     users.value.splice(index, 1, { ...form.value });
   } else {
-    // Add new user
-
     form.value.id = users.value.length + 1;
     users.value.push({ ...form.value });
   }
@@ -133,6 +183,3 @@ const deleteUser = (id) => {
   users.value = users.value.filter((user) => user.id !== id);
 };
 </script>
-
-<style scoped>
-</style>

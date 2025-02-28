@@ -2,10 +2,10 @@
 const props = defineProps({
   href: String,
   tabContentClass: String,
-})
+});
 
-const url = `https://coreui.io/vue/docs/${props.href}`
-const addClass = props.tabContentClass
+const url = `https://coreui.io/vue/docs/${props.href}`;
+const addClass = props.tabContentClass;
 </script>
 
 <template>

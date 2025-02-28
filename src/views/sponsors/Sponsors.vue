@@ -1,8 +1,5 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    hi from sponsors 
-  </div>
+  <div>hi from sponsors</div>
 </template>
