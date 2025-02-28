@@ -41,6 +41,8 @@
                 >
                   <CIcon name="cil-pencil" /> Edit
                 </CButton>
+
+                <!-- need to ask admin ARE YOU SURE TODO FIXME-->
                 <CButton
                   color="danger"
                   size="sm"
@@ -61,11 +63,23 @@
         <CModalTitle>{{ isEditing ? "Edit User" : "Add User" }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
+        <!-- need to validate inputs TODO FIXME -->
+        <!-- will make post request to db -->
         <CForm>
           <CFormInput
-            v-model="form.name"
-            label="Name"
-            placeholder="Enter name"
+            v-model="form.username"
+            label="Username"
+            placeholder="Enter username"
+          />
+          <CFormInput
+            v-model="form.first_name"
+            label="First name"
+            placeholder="Enter first name"
+          />
+          <CFormInput
+            v-model="form.last_name"
+            label="Last name"
+            placeholder="Enter last name"
           />
           <CFormInput
             v-model="form.email"
@@ -73,10 +87,19 @@
             placeholder="Enter email"
             class="mt-3"
           />
+          <CFormInput
+            v-model="form.signup_date"
+            label="Sign up date"
+            placeholder="Enter sign up date"
+          />
           <CFormSelect v-model="form.role" label="Role" class="mt-3">
             <option value="admin">Admin</option>
             <option value="user">User</option>
             <option value="member">Member</option>
+          </CFormSelect>
+          <CFormSelect v-model="form.paid_dues" label="Paid dues" class="mt-3">
+            <option value="true">True</option>
+            <option value="false">False</option>
           </CFormSelect>
         </CForm>
       </CModalBody>
@@ -164,7 +187,7 @@ const resetForm = () => {
     email: "",
     signup_date: "",
     role: "user",
-    paid_dues: false,  
+    paid_dues: false,
   };
 };
 
