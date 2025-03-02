@@ -93,10 +93,13 @@
             placeholder="Enter sign up date"
           />
           <CFormSelect v-model="form.role" label="Role" class="mt-3">
+            <!-- make this a const array and use v-for -->
             <option value="admin">Admin</option>
             <option value="user">User</option>
             <option value="member">Member</option>
           </CFormSelect>
+
+          <!-- TRY CHECK BOX -->
           <CFormSelect v-model="form.paid_dues" label="Paid dues" class="mt-3">
             <option value="true">True</option>
             <option value="false">False</option>
@@ -115,7 +118,7 @@
 
 <script setup>
 import { ref } from "vue";
-
+// TODO: POPULATE EXISTING VALUES INTO EDIT FORM
 const users = ref([
   {
     id: 1,
@@ -149,6 +152,7 @@ const users = ref([
   },
 ]);
 
+const roles = ref([ "admin", "user", "member" ])
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const form = ref({

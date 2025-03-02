@@ -31,6 +31,7 @@
               <CTableDataCell>{{ event.loc }}</CTableDataCell>
               <CTableDataCell>{{ event.date_time }}</CTableDataCell>
               <CTableDataCell>{{ event.end_time }}</CTableDataCell>
+              <CTableDataCell>{{ event.attendance }}</CTableDataCell>
               <CTableDataCell>
                 <CButton
                   color="warning"
@@ -89,6 +90,11 @@
             label="End Time"
             placeholder="Enter End Time"
           />
+          <CFormInput
+            v-model="form.attendance"
+            label="Attendance"
+            placeholder="Enter Attendance"
+          />
         </CForm>
       </CModalBody>
       <CModalFooter>
@@ -102,6 +108,9 @@
 </template>
 
 <script setup>
+
+
+// TODO: I NEED TO POPULATE EXISTING VALUES FROM FORM TO EDIT FIELDS
 import { ref } from "vue";
 
 const events = ref([
@@ -112,6 +121,7 @@ const events = ref([
     loc: "pgh 533",
     date_time: "2025-02-28T08:20:00",
     end_time: "2025-02-28T12:20:00",
+    attendance: 200,
   },
   {
     id: 2,
@@ -120,6 +130,7 @@ const events = ref([
     loc: "pgh 563",
     date_time: "2025-02-02T08:00:00",
     end_time: "2025-02-02T12:00:00",
+    attendance: 200,
   },
 ]);
 
@@ -132,6 +143,7 @@ const form = ref({
   loc: "",
   date_time: "",
   start_time: "",
+  attendance: 0,
 });
 
 const openAddEventModal = () => {
@@ -158,6 +170,7 @@ const resetForm = () => {
     loc: "",
     date_time: "",
     end_time: "",
+    attendance: 0,
   };
 };
 
