@@ -46,7 +46,7 @@
                 >
                   <CIcon name="cil-trash" /> Delete
                 </CButton>
-              </CTableDataCell>
+              </CtableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>
@@ -64,7 +64,7 @@
             v-model="form.name"
             label="Name"
             placeholder="Enter Name"
-           />
+          />
         </CForm>
       </CModalBody>
       <CModalFooter>
@@ -81,14 +81,10 @@
 import { ref } from "vue";
 // TODO: POPULATE EXISTING VALUES INTO EDIT FORM
 const matches = ref([
-{
-  id: 1,
-
-},
-
-
+  {
+    id: 1,
+  },
 ]);
-
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);
@@ -104,7 +100,7 @@ const openAddMatchModal = () => {
 
 const openEditMatchModal = (match) => {
   isEditing.value = true;
-  form.value = { ...match }
+  form.value = { ...match };
   isModalOpen.value = true;
 };
 
@@ -115,7 +111,6 @@ const closeModal = () => {
 const resetForm = () => {
   form.value = {
     id: null,
-
   };
 };
 
@@ -130,8 +125,7 @@ const saveMatch = () => {
   closeModal();
 };
 
-
 const deleteMatch = (id) => {
-  matches.value = matches.value.filter((match) => match.id !==id);
+  matches.value = matches.value.filter((match) => match.id !== id);
 };
 </script>

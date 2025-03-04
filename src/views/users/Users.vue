@@ -12,19 +12,14 @@
         <CTable striped hover responsive>
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>Username</CTableHeaderCell>
-              <CTableHeaderCell>First Name</CTableHeaderCell>
-              <CTableHeaderCell>Last Name</CTableHeaderCell>
-              <CTableHeaderCell>Email</CTableHeaderCell>
-              <CTableHeaderCell>Sign Up Date</CTableHeaderCell>
-              <CTableHeaderCell>Role</CTableHeaderCell>
-              <CTableHeaderCell>Paid Dues</CTableHeaderCell>
-              <CTableHeaderCell>Actions</CTableHeaderCell>
+              <CTableHeaderCell v-for="attri in userAttributes" :key="attri">{{
+                attri
+              }}</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
             <CTableRow v-for="user in users" :key="user.id">
+              <!-- maybe find a way to loop this as well -->
               <CTableDataCell>{{ user.id }}</CTableDataCell>
               <CTableDataCell>{{ user.username }}</CTableDataCell>
               <CTableDataCell>{{ user.first_name }}</CTableDataCell>
@@ -118,7 +113,6 @@
 
 <script setup>
 import { ref } from "vue";
-// TODO: POPULATE EXISTING VALUES INTO EDIT FORM
 const users = ref([
   {
     id: 1,
@@ -152,7 +146,19 @@ const users = ref([
   },
 ]);
 
-const roles = ref([ "admin", "user", "member" ])
+const userAttributes = [
+  "ID",
+  "Username",
+  "First Name",
+  "Last Name",
+  "Email",
+  "Sign Up Date",
+  "Role",
+  "Paid Dues",
+  "Actions",
+];
+
+const roles = ref(["admin", "user", "member"]);
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const form = ref({

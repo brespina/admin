@@ -13,13 +13,9 @@
         <CTable striped hover responsive>
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>Title</CTableHeaderCell>
-              <CTableHeaderCell>Description</CTableHeaderCell>
-              <CTableHeaderCell>Location</CTableHeaderCell>
-              <CTableHeaderCell>Date Time</CTableHeaderCell>
-              <CTableHeaderCell>End Time</CTableHeaderCell>
-              <CTableHeaderCell>Attendance</CTableHeaderCell>
+              <CTableHeaderCell v-for="attri in eventAttributes" :key="attri">{{
+                attri
+              }}</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
 
@@ -108,8 +104,6 @@
 </template>
 
 <script setup>
-
-
 // TODO: I NEED TO POPULATE EXISTING VALUES FROM FORM TO EDIT FIELDS
 import { ref } from "vue";
 
@@ -134,6 +128,16 @@ const events = ref([
   },
 ]);
 
+const eventAttributes = [
+  "ID",
+  "Title",
+  "Description",
+  "Location",
+  "Date and Time",
+  "End Time",
+  "Attendance",
+  "Actions",
+];
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const form = ref({
@@ -152,7 +156,7 @@ const openAddEventModal = () => {
   isModalOpen.value = true;
 };
 
-const openEditEventModal = () => {
+const openEditEventModal = (event) => {
   isEditing.value = true;
   form.value = { ...event };
   isModalOpen.value = true;
