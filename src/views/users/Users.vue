@@ -80,22 +80,21 @@
             v-model="form.email"
             label="Email"
             placeholder="Enter email"
-            class="mt-3"
+            class="mb-4"
           />
           <CFormInput
             v-model="form.signup_date"
             label="Sign up date"
             placeholder="Enter sign up date"
           />
-          <CFormSelect v-model="form.role" label="Role" class="mt-3">
-            <!-- make this a const array and use v-for -->
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-            <option value="member">Member</option>
+          <CFormSelect v-model="form.role" label="Role" class="mb-4">
+            <option v-for="role in roles" :key="role" :value="role">
+              {{ role }}
+            </option>
           </CFormSelect>
 
           <!-- TRY CHECK BOX -->
-          <CFormSelect v-model="form.paid_dues" label="Paid dues" class="mt-3">
+          <CFormSelect v-model="form.paid_dues" label="Paid dues" class="mb-4">
             <option value="true">True</option>
             <option value="false">False</option>
           </CFormSelect>

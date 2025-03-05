@@ -18,7 +18,7 @@
               <CTableHeaderCell>ID</CTableHeaderCell>
               <CTableHeaderCell>ID</CTableHeaderCell>
               <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>ACTIONS</CTableHeaderCell>
+              <CTableHeaderCell>Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>

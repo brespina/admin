@@ -27,6 +27,7 @@
               <CTableDataCell>{{ coordinator.id }}</CTableDataCell>
               <CTableDataCell>{{ coordinator.first_name }}</CTableDataCell>
               <CTableDataCell>{{ coordinator.last_name }}</CTableDataCell>
+              <CTableDataCell>{{ coordinator.team }}</CTableDataCell>
               <CTableDataCell>
                 <CButton
                   color="warning"
@@ -68,6 +69,11 @@
             label="Last name"
             placeholder="Enter last name"
           />
+          <CFormSelect v-model="form.team" label="Team" class="mb-4">
+            <option v-for="team in teams" :key="team" :value="team">
+              {{ team }}
+            </option>
+          </CFormSelect>
         </CForm>
       </CModalBody>
       <CModalFooter>
@@ -86,14 +92,28 @@ const coordinators = ref([
     id: 1,
     first_name: "coordinator1",
     last_name: "teehee",
+    team: "League of Legends",
   },
   {
     id: 2,
     first_name: "her jett",
     last_name: "his sage",
+    team: "Marvel Rivals",
   },
 ]);
-const coordinatorAttributes = ["ID", "First Name", "Last Name", "Actions"];
+const teams = [
+  "League of Legends",
+  "Marvel Rivals",
+  "Counter Strike 2",
+  "Valorant",
+];
+const coordinatorAttributes = [
+  "ID",
+  "First Name",
+  "Last Name",
+  "Team",
+  "Actions",
+];
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);

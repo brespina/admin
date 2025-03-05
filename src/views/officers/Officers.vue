@@ -1,5 +1,4 @@
-<!-- ONLY PRESIDENT AND VICE PRESIDENT SHOULD SEE THIS VIEW -->
-
+<!-- ONLY PRESIDENT AND VICE PRESIDENT SHOULD HAVE WRITE ACCESS THIS VIEW -->
 <template>
   <div>
     <CCard>
@@ -26,6 +25,7 @@
               <CTableDataCell>{{ officer.id }}</CTableDataCell>
               <CTableDataCell>{{ officer.first_name }}</CTableDataCell>
               <CTableDataCell>{{ officer.last_name }}</CTableDataCell>
+              <CTableDataCell>{{ officer.admin_role }}</CTableDataCell>
               <CTableDataCell>
                 <CButton
                   color="warning"
@@ -66,6 +66,12 @@
             placeholder="Enter last name"
           />
         </CForm>
+
+        <CFormSelect v-model="form.admin_role" label="Admin Role" class="mb-4">
+          <option v-for="role in adminRoles" :key="role" :value="role">
+            {{ role }}
+          </option>
+        </CFormSelect>
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" @click="closeModal">Cancel</CButton>
@@ -83,14 +89,35 @@ const officers = ref([
     id: 1,
     first_name: "BlockedBy",
     last_name: "James",
+    admin_role: "Vice President",
   },
   {
     id: 2,
     first_name: "ZOLTRAAK",
     last_name: "FRIEREN",
+    admin_role: "President",
   },
 ]);
-const officerAttributes = ["ID", "First Name", "Last Name", "Actions"];
+
+const adminRoles = ref([
+  "President",
+  "Vice President",
+  "Secretary",
+  "Esports Director",
+  "Treasurer",
+  "Event Planner",
+  "Sponsorship Manager",
+  "Marketing Coordinator",
+  "Social Media Manager",
+]);
+
+const officerAttributes = ref([
+  "ID",
+  "First Name",
+  "Last Name",
+  "Admin Role",
+  "Actions",
+]);
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);
@@ -98,6 +125,7 @@ const form = ref({
   id: null,
   first_name: "",
   last_name: "",
+  admin_role: "",
 });
 
 // want to make a general openAddModal for each page to use
@@ -122,6 +150,7 @@ const resetForm = () => {
     id: null,
     first_name: "",
     last_name: "",
+    admin_role: "",
   };
 };
 
