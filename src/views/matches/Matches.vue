@@ -1,131 +1,149 @@
-<template>
+ <template>
   <div>
-    <CCard>
-      <CCardHeader>
-        <strong>Manage Matches</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CButton color="primary" @click="openAddMatchModal" class="mb-4">
-          <CIcon name="cil-plus" /> Add Match
-        </CButton>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Matches</h2>
+      <CButton color="primary" @click="openAddModal">Add Match</CButton>
+    </div>
 
-        <CTable striped hover responsive>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableHeaderCell>Actions</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            <CTableRow v-for="match in matches" :key="match.id">
-              <CTableDataCell>{{ match.id }}</CTableDataCell>
-              <CTableDataCell>{{ match.id }}</CTableDataCell>
-              <CTableDataCell>{{ match.id }}</CTableDataCell>
-              <CTableDataCell>{{ match.id }}</CTableDataCell>
-              <CTableDataCell>{{ match.id }}</CTableDataCell>
-              <CTableDataCell>{{ match.id }}</CTableDataCell>
-              <CtableDataCell>
-                <CButton
-                  color="warning"
-                  size="sm"
-                  @click="openEditMatchModal(match)"
-                >
-                  <CIcon name="cil-pencil" /> Edit
-                </CButton>
-                <!-- again ask admin are you sure TODO FIXME -->
-                <CButton
-                  color="danger"
-                  size="sm"
-                  @click="deleteMatch(match.id)"
-                  class="ml-2"
-                >
-                  <CIcon name="cil-trash" /> Delete
-                </CButton>
-              </CtableDataCell>
-            </CTableRow>
-          </CTableBody>
-        </CTable>
-      </CCardBody>
-    </CCard>
+    <CInputGroup class="mb-3" size="sm">
+      <CFormInput
+        v-model="search"
+        placeholder="Search matches..."
+      />
+    </CInputGroup>
 
-    <CModal :visible="isModalOpen" @close="closeModal">
+    <CTable hover responsive>
+      <CTableHead>
+        <CTableRow>
+          <CTableHeaderCell>Date & Time</CTableHeaderCell>
+          <CTableHeaderCell>Opponent</CTableHeaderCell>
+          <CTableHeaderCell>Team ID</CTableHeaderCell>
+          <CTableHeaderCell>Watch Link</CTableHeaderCell>
+          <CTableHeaderCell>Actions</CTableHeaderCell>
+        </CTableRow>
+      </CTableHead>
+      <CTableBody>
+        <CTableRow v-for="match in filteredMatches" :key="match.match_id">
+          <CTableDataCell>{{ formatDateTime(match.date_time) }}</CTableDataCell>
+          <CTableDataCell>{{ match.opponent_name }}</CTableDataCell>
+          <CTableDataCell>{{ match.team_id }}</CTableDataCell>
+          <CTableDataCell>
+            <a v-if="match.watch_link" :href="match.watch_link" target="_blank">
+              {{ match.watch_link }}
+            </a>
+          </CTableDataCell>
+          <CTableDataCell>
+            <CButton size="sm" color="info" @click="openEditModal(match)">Edit</CButton>
+            <CButton size="sm" color="danger" class="ms-2" @click="onDelete(match)">Delete</CButton>
+          </CTableDataCell>
+        </CTableRow>
+      </CTableBody>
+    </CTable>
+
+    <MatchForm
+      :visible="modalVisible"
+      :match="editingMatch"
+      @submit="onFormSubmit"
+      @close="closeModal"
+    />
+
+    <CModal :visible="confirmDelete.visible" @close="confirmDelete.visible = false">
       <CModalHeader>
-        <CModalTitle>{{ isEditing ? "Edit Match" : "Add Match" }}</CModalTitle>
+        <CModalTitle>Delete Match</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <!-- ONCE AGAIN validating inputs is good for ones health TODO-->
-        <CForm>
-          <CFormInput
-            v-model="form.name"
-            label="Name"
-            placeholder="Enter Name"
-          />
-        </CForm>
+        Are you sure you want to delete the match against <b>{{ confirmDelete.match?.opponent_name }}</b>?
       </CModalBody>
       <CModalFooter>
-        <CButton color="secondary" @click="closeModal">Cancel</CButton>
-        <CButton color="primary" @click="saveMatch">{{
-          isEditing ? "Update" : "Add"
-        }}</CButton>
+        <CButton color="secondary" @click="confirmDelete.visible = false">Cancel</CButton>
+        <CButton color="danger" @click="confirmDeleteMatch">Delete</CButton>
       </CModalFooter>
     </CModal>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-// TODO: POPULATE EXISTING VALUES INTO EDIT FORM
-const matches = ref([
-  {
-    id: 1,
-  },
-]);
+import { ref, computed, onMounted } from 'vue'
+import MatchForm from '@/components/matches/MatchForm.vue'
+import { getMatches, createMatch, updateMatch, deleteMatch } from '@/services/matches.js'
+import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CInputGroup, CFormInput } from '@coreui/vue'
 
-const isModalOpen = ref(false);
-const isEditing = ref(false);
-const form = ref({
-  id: null,
-});
+// State
+const matches = ref([])
+const loading = ref(true)
+const search = ref('')
+const modalVisible = ref(false)
+const editingMatch = ref(null)
+const confirmDelete = ref({
+  visible: false,
+  match: null,
+})
 
-const openAddMatchModal = () => {
-  isEditing.value = false;
-  resetForm();
-  isModalOpen.value = true;
-};
+// Fetch matches
+const fetchMatches = async () => {
+  loading.value = true
+  const { data } = await getMatches()
+  matches.value = data
+  loading.value = false
+}
 
-const openEditMatchModal = (match) => {
-  isEditing.value = true;
-  form.value = { ...match };
-  isModalOpen.value = true;
-};
+onMounted(fetchMatches)
 
+// Search filter
+const filteredMatches = computed(() => {
+  if (!search.value.trim()) return matches.value
+  const s = search.value.toLowerCase()
+  return matches.value.filter(
+    m =>
+      m.opponent_name.toLowerCase().includes(s) ||
+      (m.watch_link && m.watch_link.toLowerCase().includes(s))
+  )
+})
+
+// Helpers
+function formatDateTime(dt) {
+  return dt ? new Date(dt).toLocaleString() : ''
+}
+
+// Add/Edit Modal
+const openAddModal = () => {
+  editingMatch.value = null
+  modalVisible.value = true
+}
+const openEditModal = (match) => {
+  editingMatch.value = { ...match }
+  modalVisible.value = true
+}
 const closeModal = () => {
-  isModalOpen.value = false;
-};
+  modalVisible.value = false
+  editingMatch.value = null
+}
 
-const resetForm = () => {
-  form.value = {
-    id: null,
-  };
-};
-
-const saveMatch = () => {
-  if (isEditing.value) {
-    const index = matches.value.findIndex((m) => m.id === match.value.id);
-    matches.value.splice(index, 1, { ...form.value });
+// Handle form submit
+const onFormSubmit = async (match) => {
+  if (match.match_id) {
+    await updateMatch(match.match_id, match)
   } else {
-    form.value.id = matches.value.length + 1;
-    matches.value.push({ ...form.value });
+    await createMatch(match)
   }
-  closeModal();
-};
+  await fetchMatches()
+  closeModal()
+}
 
-const deleteMatch = (id) => {
-  matches.value = matches.value.filter((match) => match.id !== id);
-};
+// Delete logic
+const onDelete = (match) => {
+  confirmDelete.value = {
+    visible: true,
+    match,
+  }
+}
+const confirmDeleteMatch = async () => {
+  if (confirmDelete.value.match) {
+    await deleteMatch(confirmDelete.value.match.match_id)
+    await fetchMatches()
+    confirmDelete.value.visible = false
+    confirmDelete.value.match = null
+  }
+}
 </script>
+ 

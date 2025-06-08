@@ -22,21 +22,6 @@ const routes = [
           ),
       },
       {
-        path: "/theme",
-        name: "Theme",
-        redirect: "/theme/typography",
-      },
-      {
-        path: "/theme/colors",
-        name: "Colors",
-        component: () => import("@/views/theme/Colors.vue"),
-      },
-      {
-        path: "/theme/typography",
-        name: "Typography",
-        component: () => import("@/views/theme/Typography.vue"),
-      },
-      {
         path: "/users",
         name: "Users",
 
@@ -84,43 +69,6 @@ const routes = [
         path: "/charts",
         name: "Charts",
         component: () => import("@/views/charts/Charts.vue"),
-      },
-      {
-        path: "/notifications",
-        name: "Notifications",
-        component: {
-          render() {
-            return h(resolveComponent("router-view"));
-          },
-        },
-        redirect: "/notifications/alerts",
-        children: [
-          {
-            path: "/notifications/alerts",
-            name: "Alerts",
-            component: () => import("@/views/notifications/Alerts.vue"),
-          },
-          {
-            path: "/notifications/badges",
-            name: "Badges",
-            component: () => import("@/views/notifications/Badges.vue"),
-          },
-          {
-            path: "/notifications/modals",
-            name: "Modals",
-            component: () => import("@/views/notifications/Modals.vue"),
-          },
-          {
-            path: "/notifications/toasts",
-            name: "Toasts",
-            component: () => import("@/views/notifications/Toasts.vue"),
-          },
-        ],
-      },
-      {
-        path: "/widgets",
-        name: "Widgets",
-        component: () => import("@/views/widgets/Widgets.vue"),
       },
     ],
   },

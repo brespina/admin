@@ -1,196 +1,153 @@
 <template>
   <div>
-    <CCard>
-      <CCardHeader>
-        <strong>Manage Events</strong>
-      </CCardHeader>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Events</h2>
+      <CButton color="primary" @click="openAddModal">Add Event</CButton>
+    </div>
 
-      <CCardBody>
-        <CButton color="primary" @click="openAddEventModal" class="mb-4">
-          <CIcon name="cil-plus" /> Add Event
-        </CButton>
+    <CInputGroup class="mb-3" size="sm">
+      <CFormInput
+        v-model="search"
+        placeholder="Search events..."
+      />
+    </CInputGroup>
 
-        <CTable striped hover responsive>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell v-for="attri in eventAttributes" :key="attri">{{
-                attri
-              }}</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
+    <CTable hover responsive>
+      <CTableHead>
+        <CTableRow>
+          <CTableHeaderCell>Title</CTableHeaderCell>
+          <CTableHeaderCell>Description</CTableHeaderCell>
+          <CTableHeaderCell>Location</CTableHeaderCell>
+          <CTableHeaderCell>Start</CTableHeaderCell>
+          <CTableHeaderCell>End</CTableHeaderCell>
+          <CTableHeaderCell>Attendance</CTableHeaderCell>
+          <CTableHeaderCell>Actions</CTableHeaderCell>
+        </CTableRow>
+      </CTableHead>
+      <CTableBody>
+        <CTableRow v-for="event in filteredEvents" :key="event.event_id">
+          <CTableDataCell>{{ event.title }}</CTableDataCell>
+          <CTableDataCell>
+            <span style="max-width: 200px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ event.description }}
+            </span>
+          </CTableDataCell>
+          <CTableDataCell>{{ event.location }}</CTableDataCell>
+          <CTableDataCell>{{ formatDateTime(event.date_time) }}</CTableDataCell>
+          <CTableDataCell>{{ formatDateTime(event.end_time) }}</CTableDataCell>
+          <CTableDataCell>{{ event.attendance }}</CTableDataCell>
+          <CTableDataCell>
+            <CButton size="sm" color="info" @click="openEditModal(event)">Edit</CButton>
+            <CButton size="sm" color="danger" class="ms-2" @click="onDelete(event)">Delete</CButton>
+          </CTableDataCell>
+        </CTableRow>
+      </CTableBody>
+    </CTable>
 
-          <CTableBody>
-            <CTableRow v-for="event in events" :key="event.id">
-              <CTableDataCell>{{ event.id }}</CTableDataCell>
-              <CTableDataCell>{{ event.title }}</CTableDataCell>
-              <CTableDataCell>{{ event.desc }}</CTableDataCell>
-              <CTableDataCell>{{ event.loc }}</CTableDataCell>
-              <CTableDataCell>{{ event.date_time }}</CTableDataCell>
-              <CTableDataCell>{{ event.end_time }}</CTableDataCell>
-              <CTableDataCell>{{ event.attendance }}</CTableDataCell>
-              <CTableDataCell>
-                <CButton
-                  color="warning"
-                  size="sm"
-                  @click="openEditEventModal(event)"
-                >
-                  <CIcon name="cil-pencil" /> Edit
-                </CButton>
-                <CButton
-                  color="danger"
-                  size="sm"
-                  @click="deleteEvent(event.id)"
-                  class="ml-2"
-                >
-                  <CIcon name="cil-trash" /> Delete
-                </CButton>
-              </CTableDataCell>
-            </CTableRow>
-          </CTableBody>
-        </CTable>
-      </CCardBody>
-    </CCard>
+    <EventForm
+      :visible="modalVisible"
+      :event="editingEvent"
+      @submit="onFormSubmit"
+      @close="closeModal"
+    />
 
-    <CModal :visible="isModalOpen" @close="closeModal">
+    <CModal :visible="confirmDelete.visible" @close="confirmDelete.visible = false">
       <CModalHeader>
-        <CModalTitle>{{ isEditing ? "Edit Event" : "Add Event" }}</CModalTitle>
+        <CModalTitle>Delete Event</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <CForm>
-          <!-- need to validate inputs TODO FIXME -->
-          <!-- will make post request to db -->
-          <!--  -->
-          <CFormInput
-            v-model="form.title"
-            label="Title"
-            placeholder="Enter Title"
-          />
-          <CFormInput
-            v-model="form.desc"
-            label="Description"
-            placeholder="Enter Description"
-          />
-          <CFormInput
-            v-model="form.loc"
-            label="Location"
-            placeholder="Enter Location"
-          />
-          <!-- NEED TO MAKE CALENDAR POPUP AND VALID TIME SELECTION TODO FIXME -->
-          <CFormInput
-            v-model="form.date_time"
-            label="Date Time"
-            placeholder="Enter Date and Time"
-          />
-          <CFormInput
-            v-model="form.end_time"
-            label="End Time"
-            placeholder="Enter End Time"
-          />
-          <CFormInput
-            v-model="form.attendance"
-            label="Attendance"
-            placeholder="Enter Attendance"
-          />
-        </CForm>
+        Are you sure you want to delete <b>{{ confirmDelete.event?.title }}</b>?
       </CModalBody>
       <CModalFooter>
-        <CButton color="secondary" @click="closeModal">Cancel</CButton>
-        <CButton color="primary" @click="saveEvent">{{
-          isEditing ? "Update" : "Add"
-        }}</CButton>
+        <CButton color="secondary" @click="confirmDelete.visible = false">Cancel</CButton>
+        <CButton color="danger" @click="confirmDeleteEvent">Delete</CButton>
       </CModalFooter>
     </CModal>
   </div>
 </template>
 
 <script setup>
-// TODO: I NEED TO POPULATE EXISTING VALUES FROM FORM TO EDIT FIELDS
-import { ref } from "vue";
+import { ref, computed, onMounted } from 'vue'
+import EventForm from '@/components/events/EventForm.vue'
+import { getEvents, createEvent, updateEvent, deleteEvent } from '@/services/events.js'
+import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CInputGroup, CFormInput } from '@coreui/vue'
 
-const events = ref([
-  {
-    id: 1,
-    title: "test 1",
-    desc: "testing with testers on test test desu",
-    loc: "pgh 533",
-    date_time: "2025-02-28T08:20:00",
-    end_time: "2025-02-28T12:20:00",
-    attendance: 200,
-  },
-  {
-    id: 2,
-    title: "test 2",
-    desc: "hi hi hi",
-    loc: "pgh 563",
-    date_time: "2025-02-02T08:00:00",
-    end_time: "2025-02-02T12:00:00",
-    attendance: 200,
-  },
-]);
+// State
+const events = ref([])
+const loading = ref(true)
+const search = ref('')
+const modalVisible = ref(false)
+const editingEvent = ref(null)
+const confirmDelete = ref({
+  visible: false,
+  event: null,
+})
 
-const eventAttributes = [
-  "ID",
-  "Title",
-  "Description",
-  "Location",
-  "Date and Time",
-  "End Time",
-  "Attendance",
-  "Actions",
-];
-const isModalOpen = ref(false);
-const isEditing = ref(false);
-const form = ref({
-  id: null,
-  title: "",
-  desc: "",
-  loc: "",
-  date_time: "",
-  start_time: "",
-  attendance: 0,
-});
+// Fetch events
+const fetchEvents = async () => {
+  loading.value = true
+  const { data } = await getEvents()
+  events.value = data
+  loading.value = false
+}
 
-const openAddEventModal = () => {
-  isEditing.value = false;
-  resetForm();
-  isModalOpen.value = true;
-};
+onMounted(fetchEvents)
 
-const openEditEventModal = (event) => {
-  isEditing.value = true;
-  form.value = { ...event };
-  isModalOpen.value = true;
-};
+// Search filter
+const filteredEvents = computed(() => {
+  if (!search.value.trim()) return events.value
+  const s = search.value.toLowerCase()
+  return events.value.filter(
+    e =>
+      e.title.toLowerCase().includes(s) ||
+      (e.location && e.location.toLowerCase().includes(s)) ||
+      (e.description && e.description.toLowerCase().includes(s))
+  )
+})
 
+// Helpers
+function formatDateTime(dt) {
+  return dt ? new Date(dt).toLocaleString() : ''
+}
+
+// Add/Edit Modal
+const openAddModal = () => {
+  editingEvent.value = null
+  modalVisible.value = true
+}
+const openEditModal = (event) => {
+  editingEvent.value = { ...event }
+  modalVisible.value = true
+}
 const closeModal = () => {
-  isModalOpen.value = false;
-};
+  modalVisible.value = false
+  editingEvent.value = null
+}
 
-const resetForm = () => {
-  form.value = {
-    id: null,
-    title: "",
-    desc: "",
-    loc: "",
-    date_time: "",
-    end_time: "",
-    attendance: 0,
-  };
-};
-
-const saveEvent = () => {
-  if (isEditing.value) {
-    const index = events.value.findIndex((e) => e.id === form.value.id);
-    events.value.splice(index, 1, { ...form.value });
+// Handle form submit
+const onFormSubmit = async (event) => {
+  if (event.event_id) {
+    await updateEvent(event.event_id, event)
   } else {
-    form.value.id = events.value.length + 1;
-    events.value.push({ ...form.value });
+    await createEvent(event)
   }
-  closeModal();
-};
+  await fetchEvents()
+  closeModal()
+}
 
-// ASK ARE YOU SURE TODO FIXME
-const deleteEvent = (id) => {
-  events.value = events.value.filter((event) => event.id !== id);
-};
+// Delete logic
+const onDelete = (event) => {
+  confirmDelete.value = {
+    visible: true,
+    event,
+  }
+}
+const confirmDeleteEvent = async () => {
+  if (confirmDelete.value.event) {
+    await deleteEvent(confirmDelete.value.event.event_id)
+    await fetchEvents()
+    confirmDelete.value.visible = false
+    confirmDelete.value.event = null
+  }
+}
 </script>

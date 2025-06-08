@@ -1,217 +1,154 @@
 <template>
   <div>
-    <CCard>
-      <CCardHeader>
-        <strong>Manage Users</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CButton color="primary" @click="openAddUserModal" class="mb-4">
-          <CIcon name="cil-plus" /> Add User
-        </CButton>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Users</h2>
+      <CButton color="primary" @click="openAddModal">Add User</CButton>
+    </div>
 
-        <CTable striped hover responsive>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell v-for="attri in userAttributes" :key="attri">{{
-                attri
-              }}</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            <CTableRow v-for="user in users" :key="user.id">
-              <!-- maybe find a way to loop this as well -->
-              <CTableDataCell>{{ user.id }}</CTableDataCell>
-              <CTableDataCell>{{ user.username }}</CTableDataCell>
-              <CTableDataCell>{{ user.first_name }}</CTableDataCell>
-              <CTableDataCell>{{ user.last_name }}</CTableDataCell>
-              <CTableDataCell>{{ user.email }}</CTableDataCell>
-              <CTableDataCell>{{ user.signup_date }}</CTableDataCell>
-              <CTableDataCell>{{ user.role }}</CTableDataCell>
-              <CTableDataCell>{{ user.paid_dues }}</CTableDataCell>
-              <CTableDataCell>
-                <CButton
-                  color="warning"
-                  size="sm"
-                  @click="openEditUserModal(user)"
-                >
-                  <CIcon name="cil-pencil" /> Edit
-                </CButton>
+    <CInputGroup class="mb-3" size="sm">
+      <CFormInput
+        v-model="search"
+        placeholder="Search users..."
+      />
+    </CInputGroup>
 
-                <!-- need to ask admin ARE YOU SURE TODO FIXME-->
-                <CButton
-                  color="danger"
-                  size="sm"
-                  @click="deleteUser(user.id)"
-                  class="ml-2"
-                >
-                  <CIcon name="cil-trash" /> Delete
-                </CButton>
-              </CTableDataCell>
-            </CTableRow>
-          </CTableBody>
-        </CTable>
-      </CCardBody>
-    </CCard>
+    <CTable hover responsive>
+      <CTableHead>
+        <CTableRow>
+          <CTableHeaderCell>Username</CTableHeaderCell>
+          <CTableHeaderCell>Email</CTableHeaderCell>
+          <CTableHeaderCell>First Name</CTableHeaderCell>
+          <CTableHeaderCell>Last Name</CTableHeaderCell>
+          <CTableHeaderCell>Paid Dues</CTableHeaderCell>
+          <CTableHeaderCell>Signup Date</CTableHeaderCell>
+          <CTableHeaderCell>Actions</CTableHeaderCell>
+        </CTableRow>
+      </CTableHead>
+      <CTableBody>
+        <CTableRow v-for="user in filteredUsers" :key="user.user_id">
+          <CTableDataCell>{{ user.username }}</CTableDataCell>
+          <CTableDataCell>{{ user.email }}</CTableDataCell>
+          <CTableDataCell>{{ user.first_name }}</CTableDataCell>
+          <CTableDataCell>{{ user.last_name }}</CTableDataCell>
+          <CTableDataCell>
+            <CBadge :color="user.paid_dues ? 'success' : 'danger'">
+              {{ user.paid_dues ? 'Yes' : 'No' }}
+            </CBadge>
+          </CTableDataCell>
+          <CTableDataCell>{{ formatDate(user.signup_date) }}</CTableDataCell>
+          <CTableDataCell>
+            <CButton size="sm" color="info" @click="openEditModal(user)">Edit</CButton>
+            <CButton size="sm" color="danger" class="ms-2" @click="onDelete(user)">Delete</CButton>
+          </CTableDataCell>
+        </CTableRow>
+      </CTableBody>
+    </CTable>
 
-    <CModal :visible="isModalOpen" @close="closeModal">
+    <UserForm
+      :visible="modalVisible"
+      :user="editingUser"
+      @submit="onFormSubmit"
+      @close="closeModal"
+    />
+
+    <CModal :visible="confirmDelete.visible" @close="confirmDelete.visible = false">
       <CModalHeader>
-        <CModalTitle>{{ isEditing ? "Edit User" : "Add User" }}</CModalTitle>
+        <CModalTitle>Delete User</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <!-- need to validate inputs TODO FIXME -->
-        <!-- will make post request to db -->
-        <CForm>
-          <CFormInput
-            v-model="form.username"
-            label="Username"
-            placeholder="Enter username"
-          />
-          <CFormInput
-            v-model="form.first_name"
-            label="First name"
-            placeholder="Enter first name"
-          />
-          <CFormInput
-            v-model="form.last_name"
-            label="Last name"
-            placeholder="Enter last name"
-          />
-          <CFormInput
-            v-model="form.email"
-            label="Email"
-            placeholder="Enter email"
-            class="mb-4"
-          />
-          <CFormInput
-            v-model="form.signup_date"
-            label="Sign up date"
-            placeholder="Enter sign up date"
-          />
-          <CFormSelect v-model="form.role" label="Role" class="mb-4">
-            <option v-for="role in roles" :key="role" :value="role">
-              {{ role }}
-            </option>
-          </CFormSelect>
-
-          <!-- TRY CHECK BOX -->
-          <CFormSelect v-model="form.paid_dues" label="Paid dues" class="mb-4">
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </CFormSelect>
-        </CForm>
+        Are you sure you want to delete <b>{{ confirmDelete.user?.username }}</b>?
       </CModalBody>
       <CModalFooter>
-        <CButton color="secondary" @click="closeModal">Cancel</CButton>
-        <CButton color="primary" @click="saveUser">{{
-          isEditing ? "Update" : "Add"
-        }}</CButton>
+        <CButton color="secondary" @click="confirmDelete.visible = false">Cancel</CButton>
+        <CButton color="danger" @click="confirmDeleteUser">Delete</CButton>
       </CModalFooter>
     </CModal>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-const users = ref([
-  {
-    id: 1,
-    username: "jDoe087",
-    first_name: "John",
-    last_name: "Doe",
-    email: "john@example.com",
-    signup_date: "2025-02-26",
-    role: "member",
-    paid_dues: true,
-  },
-  {
-    id: 2,
-    username: "hertzoXOXO",
-    first_name: "Jane",
-    last_name: "Dash",
-    email: "jane@example.com",
-    signup_date: "2025-02-26",
-    role: "user",
-    paid_dues: false,
-  },
-  {
-    id: 3,
-    username: "hetzo",
-    first_name: "Het",
-    last_name: "Zo",
-    email: "het@zo.com",
-    signup_date: "2024-01-17",
-    role: "admin",
-    paid_dues: true,
-  },
-]);
+import { ref, computed, onMounted } from 'vue'
+import UserForm from '@/components/users/UserForm.vue'
+import { getUsers, createUser, updateUser, deleteUser } from '@/services/users.js'
+import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton, CBadge, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CInputGroup, CFormInput } from '@coreui/vue'
 
-const userAttributes = [
-  "ID",
-  "Username",
-  "First Name",
-  "Last Name",
-  "Email",
-  "Sign Up Date",
-  "Role",
-  "Paid Dues",
-  "Actions",
-];
+// State
+const users = ref([])
+const loading = ref(true)
+const search = ref('')
+const modalVisible = ref(false)
+const editingUser = ref(null)
+const confirmDelete = ref({
+  visible: false,
+  user: null,
+})
 
-const roles = ref(["admin", "user", "member"]);
-const isModalOpen = ref(false);
-const isEditing = ref(false);
-const form = ref({
-  id: null,
-  username: "",
-  first_name: "",
-  last_name: "",
-  email: "",
-  signup_date: "",
-  role: "user",
-  paid_dues: false,
-});
+// Fetch users
+const fetchUsers = async () => {
+  loading.value = true
+  const { data } = await getUsers()
+  users.value = data
+  loading.value = false
+}
 
-const openAddUserModal = () => {
-  isEditing.value = false;
-  resetForm();
-  isModalOpen.value = true;
-};
+onMounted(fetchUsers)
 
-const openEditUserModal = (user) => {
-  isEditing.value = true;
-  form.value = { ...user };
-  isModalOpen.value = true;
-};
+// Search filter
+const filteredUsers = computed(() => {
+  if (!search.value.trim()) return users.value
+  const s = search.value.toLowerCase()
+  return users.value.filter(
+    u =>
+      u.username.toLowerCase().includes(s) ||
+      u.email.toLowerCase().includes(s) ||
+      u.first_name.toLowerCase().includes(s) ||
+      u.last_name.toLowerCase().includes(s)
+  )
+})
 
+// Helpers
+function formatDate(date) {
+  return new Date(date).toLocaleDateString()
+}
+
+// Add/Edit Modal
+const openAddModal = () => {
+  editingUser.value = null
+  modalVisible.value = true
+}
+const openEditModal = (user) => {
+  editingUser.value = { ...user }
+  modalVisible.value = true
+}
 const closeModal = () => {
-  isModalOpen.value = false;
-};
+  modalVisible.value = false
+  editingUser.value = null
+}
 
-const resetForm = () => {
-  form.value = {
-    id: null,
-    username: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    signup_date: "",
-    role: "user",
-    paid_dues: false,
-  };
-};
-
-const saveUser = () => {
-  if (isEditing.value) {
-    const index = users.value.findIndex((u) => u.id === form.value.id);
-    users.value.splice(index, 1, { ...form.value });
+// Handle form submit
+const onFormSubmit = async (user) => {
+  if (user.user_id) {
+    await updateUser(user.user_id, user)
   } else {
-    form.value.id = users.value.length + 1;
-    users.value.push({ ...form.value });
+    await createUser(user)
   }
-  closeModal();
-};
+  await fetchUsers()
+  closeModal()
+}
 
-const deleteUser = (id) => {
-  users.value = users.value.filter((user) => user.id !== id);
-};
+// Delete logic
+const onDelete = (user) => {
+  confirmDelete.value = {
+    visible: true,
+    user,
+  }
+}
+const confirmDeleteUser = async () => {
+  if (confirmDelete.value.user) {
+    await deleteUser(confirmDelete.value.user.user_id)
+    await fetchUsers()
+    confirmDelete.value.visible = false
+    confirmDelete.value.user = null
+  }
+}
 </script>

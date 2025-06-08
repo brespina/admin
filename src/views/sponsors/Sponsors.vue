@@ -1,140 +1,82 @@
 <template>
   <div>
-    <CCard>
-      <CCardHeader>
-        <strong>Manage Sponsors</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CButton color="primary" @click="openAddSponsorModal" class="mb-4">
-          <CIcon name="cil-plus" /> Add Sponsor
-        </CButton>
-
-        <CTable striped hover responsive>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell
-                v-for="attri in sponsorAttributes"
-                :key="attri"
-                >{{ attri }}</CTableHeaderCell
-              >
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            <CTableRow v-for="sponsor in sponsors" :key="sponsor.id">
-              <CTableDataCell>{{ sponsor.id }}</CTableDataCell>
-              <CTableDataCell>{{ sponsor.first_name }}</CTableDataCell>
-              <CTableDataCell>{{ sponsor.last_name }}</CTableDataCell>
-              <CTableDataCell>
-                <CButton
-                  color="warning"
-                  size="sm"
-                  @click="openEditSponsorModal(sponsor)"
-                >
-                  <CIcon name="cil-pencil" /> Edit
-                </CButton>
-                <CButton
-                  color="danger"
-                  size="sm"
-                  @click="deleteSponsor(sponsor.id)"
-                  class="ml-2"
-                >
-                  <CIcon name="cil-trash" /> Delete
-                </CButton>
-              </CTableDataCell>
-            </CTableRow>
-          </CTableBody>
-        </CTable>
-      </CCardBody>
-    </CCard>
-
-    <CModal :visible="isModalOpen" @close="closeModal">
-      <CModalHeader>
-        <CModalTitle>{{ isEditing ? "Edit Sponsor" : "Add User" }}</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        <CForm>
-          <CFormInput
-            v-model="form.first_name"
-            label="First name"
-            placeholder="Enter first name"
-          />
-          <CFormInput
-            v-model="form.last_name"
-            label="Last name"
-            placeholder="Enter last name"
-          />
-        </CForm>
-      </CModalBody>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Sponsors</h2>
+      <CButton color="primary" @click="openAddModal">Add Sponsor</CButton>
+    </div>
+    <CInputGroup class="mb-3" size="sm">
+      <CFormInput v-model="search" placeholder="Search sponsors..." />
+    </CInputGroup>
+    <CTable hover responsive>
+      <CTableHead>
+        <CTableRow>
+          <CTableHeaderCell>Name</CTableHeaderCell>
+          <CTableHeaderCell>Start Date</CTableHeaderCell>
+          <CTableHeaderCell>End Date</CTableHeaderCell>
+          <CTableHeaderCell>Actions</CTableHeaderCell>
+        </CTableRow>
+      </CTableHead>
+      <CTableBody>
+        <CTableRow v-for="s in filteredSponsors" :key="s.sponsor_id">
+          <CTableDataCell>{{ s.sponsor_name }}</CTableDataCell>
+          <CTableDataCell>{{ formatDate(s.start_date) }}</CTableDataCell>
+          <CTableDataCell>{{ formatDate(s.end_date) }}</CTableDataCell>
+          <CTableDataCell>
+            <CButton size="sm" color="info" @click="openEditModal(s)">Edit</CButton>
+            <CButton size="sm" color="danger" class="ms-2" @click="onDelete(s)">Delete</CButton>
+          </CTableDataCell>
+        </CTableRow>
+      </CTableBody>
+    </CTable>
+    <SponsorForm :visible="modalVisible" :sponsor="editingSponsor" @submit="onFormSubmit" @close="closeModal" />
+    <CModal :visible="confirmDelete.visible" @close="confirmDelete.visible = false">
+      <CModalHeader><CModalTitle>Delete Sponsor</CModalTitle></CModalHeader>
+      <CModalBody>Are you sure you want to delete <b>{{ confirmDelete.sponsor?.sponsor_name }}</b>?</CModalBody>
       <CModalFooter>
-        <CButton color="secondary" @click="closeModal">Cancel</CButton>
-        <CButton color="primary" @click="saveSponsor">{{
-          isEditing ? "Update" : "Add"
-        }}</CButton>
+        <CButton color="secondary" @click="confirmDelete.visible = false">Cancel</CButton>
+        <CButton color="danger" @click="confirmDeleteSponsor">Delete</CButton>
       </CModalFooter>
     </CModal>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
-const sponsors = ref([
-  {
-    id: 1,
-    first_name: "sponsor1",
-    last_name: "aaaaaaaaaaa",
-  },
-  {
-    id: 2,
-    first_name: "jfkdl;saf",
-    last_name: "smith",
-  },
-]);
-const sponsorAttributes = ["ID", "First Name", "Last Name", "Actions"];
+import { ref, computed, onMounted } from 'vue'
+import SponsorForm from '@/components/sponsors/SponsorForm.vue'
+import { getSponsors, createSponsor, updateSponsor, deleteSponsor } from '@/services/sponsors.js'
+import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CInputGroup, CFormInput } from '@coreui/vue'
 
-const isModalOpen = ref(false);
-const isEditing = ref(false);
-const form = ref({
-  id: null,
-  first_name: "",
-  last_name: "",
-});
+const sponsors = ref([])
+const loading = ref(true)
+const search = ref('')
+const modalVisible = ref(false)
+const editingSponsor = ref(null)
+const confirmDelete = ref({ visible: false, sponsor: null })
 
-// want to make a general openAddModal for each page to use
-const openAddSponsorModal = () => {
-  isEditing.value = false;
-  resetForm();
-  isModalOpen.value = true;
-};
+const fetchSponsors = async () => {
+  loading.value = true
+  const { data } = await getSponsors()
+  sponsors.value = data
+  loading.value = false
+}
+onMounted(fetchSponsors)
 
-const openEditSponsorModal = (sponsor) => {
-  isEditing.value = true;
-  form.value = { ...sponsor };
-  isModalOpen.value = true;
-};
-
-const closeModal = () => {
-  isModalOpen.value = false;
-};
-
-const resetForm = () => {
-  form.value = {
-    id: null,
-    first_name: "",
-    last_name: "",
-  };
-};
-
-const saveSponsor = () => {
-  if (isEditing.value) {
-    const index = sponsors.value.findIndex((o) => o.id === form.value.id);
-    sponsors.value.splice(index, 1, { ...form.value });
-  } else {
-    form.value.id = sponsors.value.length + 1;
-    sponsors.value.push({ ...form.value });
+const filteredSponsors = computed(() => {
+  if (!search.value.trim()) return sponsors.value
+  const s = search.value.toLowerCase()
+  return sponsors.value.filter(t => t.sponsor_name.toLowerCase().includes(s))
+})
+function formatDate(d) { return d ? new Date(d).toLocaleDateString() : '' }
+const openAddModal = () => { editingSponsor.value = null; modalVisible.value = true }
+const openEditModal = (s) => { editingSponsor.value = { ...s }; modalVisible.value = true }
+const closeModal = () => { modalVisible.value = false; editingSponsor.value = null }
+const onFormSubmit = async (s) => { s.sponsor_id ? await updateSponsor(s.sponsor_id, s) : await createSponsor(s); await fetchSponsors(); closeModal() }
+const onDelete = (s) => { confirmDelete.value = { visible: true, sponsor: s } }
+const confirmDeleteSponsor = async () => {
+  if (confirmDelete.value.sponsor) {
+    await deleteSponsor(confirmDelete.value.sponsor.sponsor_id)
+    await fetchSponsors()
+    confirmDelete.value.visible = false
+    confirmDelete.value.sponsor = null
   }
-  closeModal();
-};
-
-const deleteSponsor = (id) => {
-  sponsors.value = sponsors.value.filter((sponsor) => sponsor.id !== id);
-};
+}
 </script>
