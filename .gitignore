@@ -2,3 +2,6 @@
 # im so sorry i forgot this
 node_modules/
 .vite/
+
+.vscode
+.vscode/

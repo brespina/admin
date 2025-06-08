@@ -10,17 +10,21 @@ const mockSponsors = [
     sponsor_name: "Alienware",
     start_date: "2024-08-01T00:00:00",
     end_date: "2025-08-01T00:00:00",
-  }
+  },
 ];
 
-export const getSponsors = async () => Promise.resolve({ data: [...mockSponsors] });
+export const getSponsors = async () =>
+  Promise.resolve({ data: [...mockSponsors] });
 export const createSponsor = async (sponsor) => {
-  const newSponsor = { ...sponsor, sponsor_id: Math.floor(Math.random() * 100000) };
+  const newSponsor = {
+    ...sponsor,
+    sponsor_id: Math.floor(Math.random() * 100000),
+  };
   mockSponsors.push(newSponsor);
   return Promise.resolve({ data: newSponsor });
 };
 export const updateSponsor = async (id, updated) => {
-  const idx = mockSponsors.findIndex(s => s.sponsor_id === id);
+  const idx = mockSponsors.findIndex((s) => s.sponsor_id === id);
   if (idx !== -1) {
     mockSponsors[idx] = { ...mockSponsors[idx], ...updated };
     return Promise.resolve({ data: mockSponsors[idx] });
@@ -28,7 +32,7 @@ export const updateSponsor = async (id, updated) => {
   return Promise.reject(new Error("Sponsor not found"));
 };
 export const deleteSponsor = async (id) => {
-  const idx = mockSponsors.findIndex(s => s.sponsor_id === id);
+  const idx = mockSponsors.findIndex((s) => s.sponsor_id === id);
   if (idx !== -1) {
     mockSponsors.splice(idx, 1);
     return Promise.resolve({ data: { success: true } });

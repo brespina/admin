@@ -8,7 +8,7 @@ const mockEvents = [
     location: "Student Center South, Houston, TX",
     date_time: "2025-02-01T18:00:00",
     end_time: "2025-02-01T20:00:00",
-    attendance: 48
+    attendance: 48,
   },
   {
     event_id: 2,
@@ -17,8 +17,8 @@ const mockEvents = [
     location: "Esports Lounge",
     date_time: "2025-03-15T15:00:00",
     end_time: "2025-03-15T19:00:00",
-    attendance: 32
-  }
+    attendance: 32,
+  },
 ];
 
 export const getEvents = async () => {

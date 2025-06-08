@@ -69,7 +69,7 @@ CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of 
 ### Instalation
 
 ```bash
-$ npm install
+$ pnpm install
 ```
 
 or
@@ -82,7 +82,7 @@ $ yarn install
 
 ```bash
 # dev server with hot reload at http://localhost:3000
-$ npm run dev
+$ pnpm run dev
 ```
 
 or

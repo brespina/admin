@@ -7,7 +7,7 @@ const mockMatches = [
     opponent_name: "Texas State",
     team_id: 1,
     bg_image: "", // Could be a URL or base64 string for demo
-    watch_link: "https://twitch.tv/coogesports"
+    watch_link: "https://twitch.tv/coogesports",
   },
   {
     match_id: 2,
@@ -15,8 +15,8 @@ const mockMatches = [
     opponent_name: "Rice University",
     team_id: 2,
     bg_image: "",
-    watch_link: ""
-  }
+    watch_link: "",
+  },
 ];
 
 export const getMatches = async () => {
