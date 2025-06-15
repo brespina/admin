@@ -68,7 +68,7 @@ const routes = [
       {
         path: "/charts",
         name: "Charts",
-        component: () => import("@/views/charts/Charts.vue"),
+        component: () => import("@/views/coreui_defaults/charts/Charts.vue"),
       },
     ],
   },
