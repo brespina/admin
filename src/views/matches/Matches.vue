@@ -12,18 +12,18 @@
     <CTable hover responsive>
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell>Date & Time</CTableHeaderCell>
-          <CTableHeaderCell>Opponent</CTableHeaderCell>
           <CTableHeaderCell>Team ID</CTableHeaderCell>
+          <CTableHeaderCell>Opponent</CTableHeaderCell>
+          <CTableHeaderCell>Date & Time</CTableHeaderCell>
           <CTableHeaderCell>Watch Link</CTableHeaderCell>
           <CTableHeaderCell>Actions</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
       <CTableBody>
         <CTableRow v-for="match in filteredMatches" :key="match.match_id">
-          <CTableDataCell>{{ formatDateTime(match.date_time) }}</CTableDataCell>
-          <CTableDataCell>{{ match.opponent_name }}</CTableDataCell>
           <CTableDataCell>{{ match.team_id }}</CTableDataCell>
+          <CTableDataCell>{{ match.opponent_name }}</CTableDataCell>
+          <CTableDataCell>{{ formatDateTime(match.date_time) }}</CTableDataCell>
           <CTableDataCell>
             <a v-if="match.watch_link" :href="match.watch_link" target="_blank">
               {{ match.watch_link }}
