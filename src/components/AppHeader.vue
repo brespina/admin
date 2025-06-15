@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useColorModes } from "@coreui/vue";
+import { RouterLink } from "vue-router";
 
 import AppBreadcrumb from "@/components/AppBreadcrumb.vue";
 import AppHeaderDropdownAccnt from "@/components/AppHeaderDropdownAccnt.vue";
@@ -34,13 +35,19 @@ onMounted(() => {
       </CHeaderToggler>
       <CHeaderNav class="d-none d-md-flex">
         <CNavItem>
-          <CNavLink href="/dashboard"> Dashboard </CNavLink>
+          <RouterLink to="/dashboard" custom v-slot="{ href, navigate }">
+            <CNavLink :href="href" @click="navigate">Dashboard</CNavLink>
+          </RouterLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Users</CNavLink>
+          <RouterLink to="/users" custom v-slot="{ href, navigate }">
+            <CNavLink :href="href" @click="navigate">Users</CNavLink>
+          </RouterLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Settings</CNavLink>
+          <RouterLink to="/settings" custom v-slot="{ href, navigate }">
+            <CNavLink :href="href" @click="navigate">Settings</CNavLink>
+          </RouterLink>
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav class="ms-auto">
